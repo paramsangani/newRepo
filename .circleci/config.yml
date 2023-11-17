@@ -9,30 +9,33 @@ jobs:
       - run: sudo pip install -U pytest
       - run: pytest tests.py
 
-  build-and-push-docker-image:
+  build-and-push:
     docker:
-      - image: docker:19.03.12
+      - image: cimg/python:3.8
     steps:
       - checkout
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
           name: Build Docker Image
           command: |
-            docker build -t paramsangani/my-python-app:latest .
+            docker build -t $DOCKERHUB_USERNAME/myapp:${CIRCLE_SHA1} .
       - run:
-          name: Log in to Docker Hub
+          name: Authenticate with Docker Hub
           command: |
-            echo "$kzrzvzX7f_!%g4!" | docker login -u "$paramsangani" --password-stdin
+            echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USERNAME --password-stdin
       - run:
-          name: Push Docker Image
+          name: Push Docker Image to Docker Hub
           command: |
-            docker push paramsangani/my-python-app:latest
+            docker push $DOCKERHUB_USERNAME/myapp:${CIRCLE_SHA1}
+
 
 workflows:
   version: 2
-  sparse-test-and-push-image:
+  sparse-test:
     jobs:
       - sparse-test
-      - build-and-push-docker-image:
+      - build-and-push:
           filters:
             branches:
               only:
