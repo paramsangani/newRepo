@@ -15,7 +15,6 @@ jobs:
     steps:
       - checkout
       - run: sudo pip install -U pytest
-      - run: sudo pip install mock
       - run: pytest tests.py
           #name: "Say hello"
           #command: "echo Hello, World!"
