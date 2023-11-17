@@ -30,7 +30,7 @@ jobs:
 
 workflows:
   version: 2
-  sparse-test:
+  sparse-test-build-and-push:
     jobs:
       - sparse-test
       - build-and-push:
