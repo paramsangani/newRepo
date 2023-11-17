@@ -1,5 +1,0 @@
-starting test 2
-
-hi world
-
-test circle ci
