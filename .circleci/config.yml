@@ -19,7 +19,8 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker build -t $paramsangani/myapp:${CIRCLE_SHA1} .
+            SHORT_SHA1=$(echo "${CIRCLE_SHA1}" | cut -c 1-7)
+            docker build -t paramsangani/myapp:${SHORT_SHA1} .
       - run:
           name: Authenticate with Docker Hub
           command: |
@@ -27,7 +28,8 @@ jobs:
       - run:
           name: Push Docker Image to Docker Hub
           command: |
-            docker push $paramsangani/myapp:${CIRCLE_SHA1}
+            SHORT_SHA1=$(echo "${CIRCLE_SHA1}" | cut -c 1-7)
+            docker push $paramsangani/myapp:${SHORT_SHA1}
 
 
 workflows:
