@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Authenticate with Docker Hub
           command: |
-            echo "$kzrzvzX7f_!%g4!" | docker login --username $paramsangani --password-stdin
+            echo "$kzrzvzX7f_!%g4!" | docker login --username "$paramsangani" --password-stdin
       - run:
           name: Push Docker Image to Docker Hub
           command: |
