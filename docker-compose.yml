@@ -1,0 +1,5 @@
+version: '3.8'
+
+services:
+  my-python-app:
+    image: paramsangani/my-python-app:latest
