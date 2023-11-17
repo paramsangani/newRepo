@@ -17,19 +17,14 @@ jobs:
       - setup_remote_docker:
           version: 19.03.13
       - run:
-          name: Build Docker Image
-          command: |
-            SHORT_SHA1=$(echo "${CIRCLE_SHA1}" | cut -c 1-7)
-            docker build -t paramsangani/myapp:${SHORT_SHA1} .
+          name: Docker build
+          command: docker-compose build
       - run:
           name: Authenticate with Docker Hub
-          command: |
-            echo $kzrzvzX7f_!%g4! | docker login --username $paramsangani --password-stdin
+          command: echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USERNAME --password-stdin
       - run:
           name: Push Docker Image to Docker Hub
-          command: |
-            SHORT_SHA1=$(echo "${CIRCLE_SHA1}" | cut -c 1-7)
-            docker push $paramsangani/myapp:${SHORT_SHA1}
+          command: docker-compose push
 
 
 workflows:
