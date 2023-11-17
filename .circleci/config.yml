@@ -9,15 +9,34 @@ jobs:
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/configuration-reference/#executor-job
     docker:
-      - image: circleci/python:3.9
+      - image: cimg/base:2022.09
+        auth:
+          username: $paramsangani
+          password: $kzrzvzX7f_!%g4!
     # Add steps to the job
     # See: https://circleci.com/docs/configuration-reference/#steps
     steps:
       - checkout
+      - setup_remote_docker
+      - restore_cache:
+          keys:
+            - v1-{{ .Branch }}
+          paths:
+            - /caches/app.tar
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/app.tar | true
       - run: sudo pip install -U pytest
       - run: pytest tests.py
-          #name: "Say hello"
-          #command: "echo Hello, World!"
+      - run:
+          name: Build and Push application Docker image
+          command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build -t $paramsangani/circleci-docker-example:$TAG .
+            echo $kzrzvzX7f_!%g4! | docker login -u $paramsangani --password-stdin
+            docker push $paramsangani/circleci-docker-example:$TAG
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
