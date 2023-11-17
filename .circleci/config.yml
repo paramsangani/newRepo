@@ -28,6 +28,7 @@ jobs:
           command: |
             set +o pipefail
             docker load -i /caches/app.tar | true
+      - run: sudo apt install python3-pip
       - run: python3 -m pip --version
       - run: sudo pip install -U pytest
       - run: pytest tests.py
