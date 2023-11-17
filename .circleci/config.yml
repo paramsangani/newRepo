@@ -19,15 +19,15 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            docker build -t $DOCKERHUB_USERNAME/myapp:${CIRCLE_SHA1} .
+            docker build -t $paramsangani/myapp:${CIRCLE_SHA1} .
       - run:
           name: Authenticate with Docker Hub
           command: |
-            echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USERNAME --password-stdin
+            echo "$kzrzvzX7f_!%g4!" | docker login --username $paramsangani --password-stdin
       - run:
           name: Push Docker Image to Docker Hub
           command: |
-            docker push $DOCKERHUB_USERNAME/myapp:${CIRCLE_SHA1}
+            docker push $paramsangani/myapp:${CIRCLE_SHA1}
       - run: sudo pip install -U pytest
       - run: pytest tests.py
           #name: "Say hello"
