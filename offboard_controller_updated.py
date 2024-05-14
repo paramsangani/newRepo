@@ -5,7 +5,6 @@ from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
 from px4_msgs.msg import OffboardControlMode, TrajectorySetpoint, VehicleCommand, VehicleLocalPosition, VehicleStatus
 
-
 class OffboardControl(Node):
     """Node for controlling a vehicle in offboard mode."""
 
@@ -131,6 +130,16 @@ class OffboardControl(Node):
         if self.offboard_setpoint_counter < 11:
             self.offboard_setpoint_counter += 1
 
+
+    def vehicle_local_position_callback(self, vehicle_local_position):
+        """Callback function for vehicle_local_position topic subscriber."""
+        self.vehicle_local_position = vehicle_local_position
+        self.get_logger().info(f"Vehicle Local Position: {self.vehicle_local_position}")
+
+    def vehicle_status_callback(self, vehicle_status):
+        """Callback function for vehicle_status topic subscriber."""
+        self.vehicle_status = vehicle_status
+        self.get_logger().info(f"Vehicle Status: {self.vehicle_status}")
 
 def main(args=None) -> None:
     print('Starting offboard control node...')
