@@ -29,3 +29,9 @@ make px4_sitl jmavsim
 # micrortps_agent -t UDP
 MicroXRCEAgent udp4 -p 8888
 ```
+## Run the ROS 2 node in another terminal (offboard_control)
+```
+cd ~/ws_ros2
+source install/local_setup.bash
+ros2 run px4_ros_com offboard_control
+```
